@@ -20,7 +20,7 @@ function App() {
       <div className='black-nav'>
         <div style={{fontSize: '30px'}}>인편을 쓰자!</div>
       </div>
-      <button onClick={ 제목바꾸기() }>안녕?</button>
+      <button onClick={ 제목바꾸기 }>안녕?</button>
       <div className='list'>
         <h3> { 편지제목[0] } <span onClick={ ()=>{ 따봉변경(따봉+1) } }>👍</span> { 따봉 } </h3>
         <p>2월 17일 전송</p>
