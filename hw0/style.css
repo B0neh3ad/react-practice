@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    height: 50px;
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    background-color: rgb(243, 228, 200);
+    box-shadow: 0 1px 3px 1px #b9b9b9;
+}
+
+header p {
+    font-size: 25px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+header img {
+    height: 100%;
+}
+
+.review-form {
+    position: absolute;
+    margin-top: 20px;
+    width: 450px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.review-form h1 {
+    font-size: 20px;
+}
+
+.review-form ul {
+    list-style: none;
+}
+
+.review-form li {
+    display: grid;
+    font-size: 15px;
+}
+
+.review-form label {
+    margin-bottom: 5px;
+}
+
+.review-form input {
+    margin-bottom: 5px;
+}
+
+.review-form button {
+    float: right;
+}
