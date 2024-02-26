@@ -36,8 +36,19 @@ function App() {
         <p>2월 29일 전송예약</p>
         <hr/>
       </div>
+      <Modal />
     </div>
   );
+}
+
+function Modal(){
+  return (
+    <div className='modal'>
+      <h3>제목</h3>
+      <p>2월 17일 전송</p>
+      <p>상세 내용</p>
+    </div>
+  )
 }
 
 export default App;
