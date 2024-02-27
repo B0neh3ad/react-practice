@@ -6,11 +6,17 @@
 
 header {
     height: 50px;
-    display: flex;
     padding: 5px;
-    align-items: center;
     background-color: rgb(243, 228, 200);
     box-shadow: 0 1px 3px 1px #b9b9b9;
+}
+
+header a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
 }
 
 header p {
@@ -41,17 +47,28 @@ header img {
 
 .review-form li {
     display: grid;
+}
+
+.review-form li * {
+    font-family: inherit;
     font-size: 15px;
-}
-
-.review-form label {
     margin-bottom: 5px;
 }
 
-.review-form input {
-    margin-bottom: 5px;
+.review-form li textarea {
+    resize: none;
+    height: auto;
 }
 
 .review-form button {
+    cursor: pointer;
     float: right;
+    background-color: #86f518;
+    border-radius: 5px;
+    border: none;
+    padding: 1px 7px;
+}
+
+.review-form button:active {
+    background-color: #6ac014;
 }
