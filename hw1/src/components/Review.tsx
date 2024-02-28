@@ -20,7 +20,7 @@ function Review({value}: ReviewProps) {
             <div className={styles.reviewTitle}>
                 <span className={styles.snackName}>{value.snack_name}</span>
                 /
-                <span className={styles.rating}>★{value.rating}</span>
+                <span className={styles.rating}>★{value.rating.toFixed(1)}</span>
             </div>
             <p className={styles.content}>{value.content}</p>
         </div>
