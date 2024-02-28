@@ -5,6 +5,7 @@
     padding: 10px;
 
     display: flex;
+    position: relative;
 }
 
 .snackImage {
@@ -38,4 +39,20 @@
 .content {
     width: 100%;
     text-align: left;
+}
+
+.reviewButtonWrapper {
+    display: flex;
+    position: absolute;
+    right: 5px;
+}
+
+.reviewButton {
+    margin: 0 5px;
+    cursor: pointer;
+    display: none;
+}
+
+.review:hover .reviewButton {
+    display: inherit;
 }

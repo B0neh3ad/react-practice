@@ -1,4 +1,6 @@
 import styles from "../styles/Review.module.css";
+import edit from "../assets/edit.svg";
+import remove from "../assets/remove.svg";
 
 type ReviewValue = {
     id: number,
@@ -23,6 +25,10 @@ function Review({value}: ReviewProps) {
                 <span className={styles.rating}>★{value.rating.toFixed(1)}</span>
             </div>
             <p className={styles.content}>{value.content}</p>
+        </div>
+        <div className={styles.reviewButtonWrapper}>
+            <img className={styles.reviewButton} src={edit} width="20" height="20"></img>
+            <img className={styles.reviewButton} src={remove} width="20" height="20"></img>
         </div>
     </div>
     );
