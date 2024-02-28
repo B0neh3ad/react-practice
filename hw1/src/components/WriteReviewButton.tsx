@@ -5,7 +5,7 @@ function WriteReviewButton() {
         /* 리뷰 작성 모달 띄우기 */
     }
     return (
-        <div className={styles.writeReview} onClick={()=>{handleClick()}} />
+        <div className={styles.writeReviewButton} onClick={()=>{handleClick()}} />
     );
 }
 
