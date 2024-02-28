@@ -1,0 +1,41 @@
+.review {
+    margin-bottom: 10px;
+    box-shadow: 1px 2px 3px 1px #b9b9b9;
+    border-radius: 1px;
+    padding: 10px;
+
+    display: flex;
+}
+
+.snackImage {
+    width: 100px;
+    height: 100px;
+    border: 1.5px solid rgb(255, 193, 101);
+    border-radius: 30px;
+}
+
+.reviewMain {
+    margin-left: 5px;
+}
+
+.reviewTitle {
+    margin-bottom: 5px;
+}
+
+.snackName {
+    margin-right: 5px;
+}
+
+.rating {
+    margin-left: 5px;
+    color: rgb(255, 146, 74);
+}
+
+.snackName, .rating {
+    font-weight: bold;
+}
+
+.content {
+    width: 100%;
+    text-align: left;
+}
