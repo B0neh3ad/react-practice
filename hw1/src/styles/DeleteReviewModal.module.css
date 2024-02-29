@@ -1,0 +1,11 @@
+.header {
+    margin-bottom: 10px;
+}
+
+.body {
+    margin-bottom: 5px;
+}
+
+.deleteReviewDeleteButton {
+    background-color: rgb(255, 182, 182);
+}
