@@ -19,7 +19,8 @@
     margin-left: 5px;
 }
 
-.reviewTitle {
+.reviewHeader {
+    display: flex;
     margin-bottom: 5px;
 }
 

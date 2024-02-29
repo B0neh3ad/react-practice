@@ -1,6 +1,6 @@
 import styles from "../styles/Review.module.css";
-import edit from "../assets/edit.svg";
-import remove from "../assets/remove.svg";
+import editReview from "../assets/editReview.svg";
+import deleteReview from "../assets/deleteReview.svg";
 
 type ReviewValue = {
     id: number,
@@ -19,16 +19,16 @@ function Review({value}: ReviewProps) {
     <div className={styles.review} data-testid="review">
         <img className={styles.snackImage} data-testid="snack-image" src={value.image} alt="과자 사진"></img>
         <div className={styles.reviewMain}>
-            <div className={styles.reviewTitle}>
+            <div className={styles.reviewHeader}>
                 <span className={styles.snackName}>{value.snack_name}</span>
                 /
                 <span className={styles.rating}>★{value.rating.toFixed(1)}</span>
+                <div className={styles.reviewButtonWrapper}>
+                    <img className={styles.reviewButton} src={editReview} width="20" height="20"></img>
+                    <img className={styles.reviewButton} src={deleteReview} width="20" height="20"></img>
+                </div>
             </div>
             <p className={styles.content}>{value.content}</p>
-        </div>
-        <div className={styles.reviewButtonWrapper}>
-            <img className={styles.reviewButton} src={edit} width="20" height="20"></img>
-            <img className={styles.reviewButton} src={remove} width="20" height="20"></img>
         </div>
     </div>
     );
