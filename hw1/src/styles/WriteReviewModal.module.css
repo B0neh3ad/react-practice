@@ -1,26 +1,4 @@
-.writeReviewModal {
-    position: fixed;
-    inset: 0 0 0 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modalContent {
-    width: 400px;
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.modalTitle {
-    font-size: 20px;
-}
-
-.modalImagePreview {
+.imagePreview {
     display: block;
     margin: auto;
     width: 100px;
@@ -29,34 +7,31 @@
     border-radius: 30px;
 }
 
-.modalLabel {
+.label {
     margin-bottom: 3px;
     display: inline-block;
+    cursor: pointer;
 }
 
-.modalInput {
+.input {
     width: 100%;
     margin-bottom: 15px;
 }
 
-.modalInputMessage {
+.inputMessage {
     color: red;
     margin-top: -15px;
     margin-bottom: 5px;
 }
 
-.modalInputMessage:empty {
+.inputMessage:empty {
     margin: 0;
 }
 
-.modalTextarea {
+.textarea {
     width: 100%;
     resize: none;
     height: auto;
-}
-
-.modalFooter {
-    text-align: right;
 }
 
 .submitReviewButton, .cancelReviewButton {
@@ -64,7 +39,7 @@
     border: none;
     margin: 0 3px;
     padding: 1px 5px;
-
+    cursor: pointer;
 }
 
 .submitReviewButton {
