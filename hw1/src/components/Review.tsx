@@ -1,34 +1,53 @@
+import { ChangeEventHandler, useState } from "react";
+import { ReviewValue } from "./ReviewList";
 import styles from "../styles/Review.module.css";
 import editReview from "../assets/editReview.svg";
+import editReviewCancel from "../assets/cancelEditReview.svg";
 import deleteReview from "../assets/deleteReview.svg";
-
-type ReviewValue = {
-    id: number,
-    image: string,
-    snack_name: string,
-    rating: number,
-    content: string,
-};
+import editReviewSave from "../assets/saveReview.svg";
 
 type ReviewProps = {
-    value: ReviewValue
+    reviewValue: ReviewValue,
+    editReviewId: number | null,
+    onEdit(): void,
+    onCancelEdit(): void,
+    onSave(content: string): void,
+    onDelete(): void,
 };
 
-function Review({value}: ReviewProps) {
+function Review({reviewValue, editReviewId, onEdit, onCancelEdit, onSave, onDelete}: ReviewProps) {
+    const [content, setContent] = useState(reviewValue.content) // content 편집을 위한 state
+    const handleChangeContent: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+        setContent(e.target.value);
+    }
+
     return (
     <div className={styles.review} data-testid="review">
-        <img className={styles.snackImage} data-testid="snack-image" src={value.image} alt="과자 사진"></img>
+        <img className={styles.snackImage} data-testid="snack-image" src={reviewValue.image} alt="과자 사진"></img>
         <div className={styles.reviewMain}>
             <div className={styles.reviewHeader}>
-                <span className={styles.snackName}>{value.snack_name}</span>
+                <span className={styles.snackName}>{reviewValue.snack_name}</span>
                 /
-                <span className={styles.rating}>★{value.rating.toFixed(1)}</span>
+                <span className={styles.rating}>★{reviewValue.rating.toFixed(1)}</span>
                 <div className={styles.reviewButtonWrapper}>
-                    <img className={styles.reviewButton} src={editReview} width="20" height="20"></img>
-                    <img className={styles.reviewButton} src={deleteReview} width="20" height="20"></img>
+                    {
+                        editReviewId === reviewValue.id
+                        ? <>
+                            <img data-testid="edit-review-save" className={styles.editReviewSaveButton} src={editReviewSave} onClick={()=>{onSave(content)}}></img>
+                            <img data-testid="edit-review-cancel" className={styles.editReviewCancelButton} src={editReviewCancel} onClick={onCancelEdit}></img>
+                        </>
+                        : <>
+                            <img data-testid="edit-review" className={styles.editReviewButton} src={editReview} onClick={onEdit}></img>
+                            <img data-testid="delete-review" className={styles.deleteReviewButton} src={deleteReview} onClick={onDelete}></img>
+                        </>
+                    }
                 </div>
             </div>
-            <p className={styles.content}>{value.content}</p>
+            {
+                editReviewId === reviewValue.id
+                ? <textarea id="edit-content-input" className={styles.editContentInput} value={content} onChange={handleChangeContent}/>
+                : <p className={styles.content}>{reviewValue.content}</p>
+            }
         </div>
     </div>
     );
