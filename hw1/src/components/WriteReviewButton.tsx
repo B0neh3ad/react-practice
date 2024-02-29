@@ -1,11 +1,12 @@
 import styles from '../styles/WriteReviewButton.module.css';
 
-function WriteReviewButton() {
-    function handleClick() {
-        /* 리뷰 작성 모달 띄우기 */
-    }
+type WriteReviewButtonProps = {
+    onClick(): void
+};
+
+function WriteReviewButton({ onClick }: WriteReviewButtonProps) {
     return (
-        <div className={styles.writeReviewButton} onClick={()=>{handleClick()}} />
+        <div data-testid="write-review" className={styles.writeReviewButton} onClick={onClick} />
     );
 }
 

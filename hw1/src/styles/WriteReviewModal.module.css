@@ -1,0 +1,76 @@
+.writeReviewModal {
+    position: fixed;
+    inset: 0 0 0 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalContent {
+    width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modalTitle {
+    font-size: 20px;
+}
+
+.modalImagePreview {
+    display: block;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    border: 1.5px solid rgb(255, 193, 101);
+    border-radius: 30px;
+}
+
+.modalLabel {
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+.modalInput {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.modalInputMessage {
+    color: red;
+    margin-top: -15px;
+    margin-bottom: 5px;
+}
+
+.modalInputMessage:empty {
+    margin: 0;
+}
+
+.modalTextarea {
+    width: 100%;
+    resize: none;
+    height: auto;
+}
+
+.modalFooter {
+    text-align: right;
+}
+
+.submitReviewButton, .cancelReviewButton {
+    border-radius: 5px;
+    border: none;
+    margin: 0 3px;
+    padding: 1px 5px;
+
+}
+
+.submitReviewButton {
+    background-color: rgb(37, 218, 43);
+}
+
+.cancelReviewButton {
+    background-color: rgb(255, 182, 182);
+}
