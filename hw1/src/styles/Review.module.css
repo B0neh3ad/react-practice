@@ -16,6 +16,9 @@
 }
 
 .reviewMain {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     margin-left: 5px;
 }
 
@@ -42,18 +45,36 @@
     text-align: left;
 }
 
+.editContentInput {
+    flex-grow: 1;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid black;
+    resize: none;
+}
+
 .reviewButtonWrapper {
     display: flex;
     position: absolute;
     right: 5px;
 }
 
-.reviewButton {
+.editReviewButton,
+.deleteReviewButton,
+.editReviewSaveButton,
+.editReviewCancelButton {
+    width: 20px;
+    height: 20px;
     margin: 0 5px;
     cursor: pointer;
+}
+
+.editReviewButton,
+.deleteReviewButton {
     display: none;
 }
 
-.review:hover .reviewButton {
+.review:hover .editReviewButton,
+.review:hover .deleteReviewButton {
     display: inherit;
 }
