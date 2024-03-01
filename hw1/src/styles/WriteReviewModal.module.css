@@ -24,6 +24,10 @@
     margin-bottom: 5px;
 }
 
+.inputMessage ~ .textarea {
+    margin-bottom: 10px;
+}
+
 .inputMessage:empty {
     margin: 0;
 }
