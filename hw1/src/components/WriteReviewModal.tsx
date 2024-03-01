@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import styles from '../styles/WriteReviewModal.module.css';
 import modalStyles from '../styles/common/Modal.module.css';
 import loading from '../assets/loading.svg';
@@ -137,7 +137,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         onLoad={()=>{
                             setIsImageLoaded(true);
                         }}
-                        onError={(e) => {
+                        onError={() => {
                             setIsImageLoaded(false);
                         }}
                     />

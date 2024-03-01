@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Review from "./Review";
 import styles from "../styles/ReviewList.module.css";
 

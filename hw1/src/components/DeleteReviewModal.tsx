@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import modalStyles from '../styles/common/Modal.module.css';
 import styles from '../styles/DeleteReviewModal.module.css';
 
