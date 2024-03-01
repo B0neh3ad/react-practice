@@ -5,9 +5,19 @@ import ReviewList from "./components/ReviewList";
 import WriteReviewButton from "./components/WriteReviewButton";
 import WriteReviewModal from "./components/WriteReviewModal";
 import DeleteReviewModal from './components/DeleteReviewModal';
+import { ReviewForm } from "./components/WriteReviewModal";
+import { ReviewValue } from "./components/ReviewList";
 import './App.css';
 
+export type ValidationErrorMessage = {
+    image: string,
+    snack_name: string,
+    rating: string,
+    content: string,
+}
+
 function App() {
+    const [nextId, setNextId] = useState(1000);
     const [reviews, setReviews] = useState(initReviewList);
     const [showWriteReviewModal, setShowWriteReviewModal] = useState(false);
     const [showDeleteReviewModal, setShowDeleteReviewModal] = useState(false);
@@ -23,7 +33,7 @@ function App() {
         setEditReviewId(null);
     }
 
-    function handleSave(reviewId: number, content: string) {
+    function handleSaveEdit(reviewId: number, content: string) {
         const newReviews = reviews.map((value) => {
             if (value.id === reviewId) {
                 const newValue = { ...value, content: content };
@@ -61,8 +71,25 @@ function App() {
     }
 
     function handleCloseDeleteReviewModal() {
-        setDeleteReviewId(null);
         setShowDeleteReviewModal(false);
+    }
+
+    /**
+     * 전달받은 reviewForm을 'ReviewValue' type으로 전환하여 'reviews' state에 저장
+     * @param validatedReviewForm WriteReviewModal Component에서 validation을 수행한 reviewForm
+     */
+    function handleSubmit(validatedReviewForm: ReviewForm) {
+        const newReview: ReviewValue = {
+            id: nextId,
+            image: validatedReviewForm.image,
+            snack_name: validatedReviewForm.snack_name,
+            rating: Number(validatedReviewForm.rating),
+            content: validatedReviewForm.content,
+        };
+        const newReviews = [...reviews, newReview];
+        setReviews(newReviews);
+        setNextId(nextId + 1);
+        handleCloseWriteReviewModal();
     }
 
     return (
@@ -73,17 +100,20 @@ function App() {
                 editReviewId={editReviewId}
                 onEdit={handleEdit}
                 onCancelEdit={handleCancelEdit}
-                onSave={handleSave}
+                onSaveEdit={handleSaveEdit}
                 onOpenDeleteReviewModal={handleOpenDeleteReviewModal}
             />
             <WriteReviewButton onClick={handleOpenWriteReviewModal} />
             <WriteReviewModal
                 showModal={showWriteReviewModal}
                 onClose={handleCloseWriteReviewModal}
+                onSubmit={handleSubmit}
             />
             <DeleteReviewModal
                 showModal={showDeleteReviewModal}
-                snackName={deleteReviewId ? reviews.find(review => review.id === deleteReviewId)!.snack_name : ""}
+                snackName={
+                    reviews.find(review => review.id === deleteReviewId)?.snack_name
+                }
                 onClose={handleCloseDeleteReviewModal}
                 onDelete={handleDelete}
             />
