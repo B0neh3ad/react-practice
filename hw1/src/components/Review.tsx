@@ -11,11 +11,11 @@ type ReviewProps = {
     editReviewId: number | null,
     onEdit(): void,
     onCancelEdit(): void,
-    onSave(content: string): void,
+    onSaveEdit(content: string): void,
     onDelete(): void,
 };
 
-function Review({reviewValue, editReviewId, onEdit, onCancelEdit, onSave, onDelete}: ReviewProps) {
+function Review({reviewValue, editReviewId, onEdit, onCancelEdit, onSaveEdit, onDelete}: ReviewProps) {
     const [content, setContent] = useState(reviewValue.content) // content 편집을 위한 state
     const handleChangeContent: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
         setContent(e.target.value);
@@ -33,19 +33,21 @@ function Review({reviewValue, editReviewId, onEdit, onCancelEdit, onSave, onDele
                     {
                         editReviewId === reviewValue.id
                         ? <>
-                            <img data-testid="edit-review-save" className={styles.editReviewSaveButton} src={editReviewSave} onClick={()=>{onSave(content)}}></img>
+                            <img data-testid="edit-review-save" className={styles.editReviewSaveButton} src={editReviewSave} onClick={()=>{onSaveEdit(content)}}></img>
                             <img data-testid="edit-review-cancel" className={styles.editReviewCancelButton} src={editReviewCancel} onClick={onCancelEdit}></img>
                         </>
-                        : <>
+                        : editReviewId === null
+                        ? <>
                             <img data-testid="edit-review" className={styles.editReviewButton} src={editReview} onClick={onEdit}></img>
                             <img data-testid="delete-review" className={styles.deleteReviewButton} src={deleteReview} onClick={onDelete}></img>
                         </>
+                        : ""
                     }
                 </div>
             </div>
             {
                 editReviewId === reviewValue.id
-                ? <textarea id="edit-content-input" className={styles.editContentInput} value={content} onChange={handleChangeContent}/>
+                ? <textarea data-testid="edit-review-content-input" id="edit-review-content-input" className={styles.editReviewContentInput} value={content} onChange={handleChangeContent}/>
                 : <p className={styles.content}>{reviewValue.content}</p>
             }
         </div>

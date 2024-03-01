@@ -7,7 +7,7 @@ type ReviewListProps = {
     editReviewId: number | null,
     onEdit(reviewId: number): void,
     onCancelEdit(): void,
-    onSave(reviewId: number, content: string): void,
+    onSaveEdit(reviewId: number, content: string): void,
     onOpenDeleteReviewModal(reviewId: number): void,
 };
 
@@ -19,7 +19,7 @@ export type ReviewValue = {
     content: string,
 };
 
-function ReviewList({ reviews, editReviewId, onEdit, onCancelEdit, onSave, onOpenDeleteReviewModal }: ReviewListProps) {
+function ReviewList({ reviews, editReviewId, onEdit, onCancelEdit, onSaveEdit, onOpenDeleteReviewModal }: ReviewListProps) {
     function handleEdit(reviewId: number) {
         onEdit(reviewId);
     }
@@ -28,8 +28,8 @@ function ReviewList({ reviews, editReviewId, onEdit, onCancelEdit, onSave, onOpe
         onCancelEdit();
     }
 
-    function handleSave(reviewId: number, content: string) {
-        onSave(reviewId, content);
+    function handleSaveEdit(reviewId: number, content: string) {
+        onSaveEdit(reviewId, content);
     }
 
     function handleOpenDeleteReviewModal(reviewId: number) {
@@ -47,7 +47,7 @@ function ReviewList({ reviews, editReviewId, onEdit, onCancelEdit, onSave, onOpe
                                 editReviewId={editReviewId}
                                 onEdit={() => { handleEdit(review.id) }}
                                 onCancelEdit={() => { handleCancelEdit() }}
-                                onSave={(content) => { handleSave(review.id, content) }}
+                                onSaveEdit={(content) => { handleSaveEdit(review.id, content) }}
                                 onDelete={() => { handleOpenDeleteReviewModal(review.id) }}
                             />
                         </li>
