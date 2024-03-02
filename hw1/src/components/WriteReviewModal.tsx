@@ -104,7 +104,6 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
         
         if(JSON.stringify(newErrorObj) !== JSON.stringify(initErrorObj)) {
             // validation error 존재하는 경우 출력
-            console.log(newErrorObj);
             setErrorObj(newErrorObj);
         } else {
             onSubmit(reviewForm);

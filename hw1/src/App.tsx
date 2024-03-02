@@ -34,14 +34,9 @@ function App() {
     }
 
     function handleSaveEdit(reviewId: number, content: string) {
-        const newReviews = reviews.map((value) => {
-            if (value.id === reviewId) {
-                const newValue = { ...value, content: content };
-                console.log(newValue);
-                return newValue;
-            }
-            return value;
-        })
+        const newReviews = reviews.map(value => 
+            value.id === reviewId ? { ...value, content: content } : value
+        )
         setReviews(newReviews);
         setEditReviewId(null);
     }
@@ -62,7 +57,6 @@ function App() {
     }
 
     function handleDelete() {
-        console.log(`delete review #${deleteReviewId}`);
         const newReviews = reviews.filter(value => value.id !== deleteReviewId)
         setReviews(newReviews);
         handleCloseDeleteReviewModal();
