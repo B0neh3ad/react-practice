@@ -1,14 +1,18 @@
+import { useSnackContext } from '../contexts/SnackContext';
 import modalStyles from '../styles/common/Modal.module.css';
 import styles from '../styles/DeleteReviewModal.module.css';
 
-type DeleteReviewModalProps = {
-    showModal: boolean,
-    snackName: string | undefined,
-    onClose(): void,
-    onDelete(): void,
-};
+function DeleteReviewModal() {
+    const {
+        reviews,
+        deleteReviewId,
+        showDeleteReviewModal: showModal,
+        closeDeleteReviewModal: onClose,
+        deleteReview: onDelete
+    } = useSnackContext();
 
-function DeleteReviewModal({ showModal, snackName, onClose, onDelete }: DeleteReviewModalProps) {
+    const snackName = reviews.find(review => review.id === deleteReviewId)?.snack_name;
+
     return (
         <div className={`${modalStyles.background} ${!showModal ? modalStyles.out : ""}` } onClick={onClose}>
             <div className={modalStyles.content} data-testid="write-review-modal" onClick={e => e.stopPropagation}>

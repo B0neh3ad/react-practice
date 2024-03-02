@@ -1,12 +1,11 @@
+import { useContext } from 'react';
+import { SnackContext, useSnackContext } from '../contexts/SnackContext';
 import styles from '../styles/WriteReviewButton.module.css';
 
-type WriteReviewButtonProps = {
-    onClick(): void
-};
-
-function WriteReviewButton({ onClick }: WriteReviewButtonProps) {
+function WriteReviewButton() {
+    const { openWriteReviewModal } = useSnackContext();
     return (
-        <div data-testid="write-review" className={styles.writeReviewButton} onClick={onClick} />
+        <div data-testid="write-review" className={styles.writeReviewButton} onClick={openWriteReviewModal} />
     );
 }
 

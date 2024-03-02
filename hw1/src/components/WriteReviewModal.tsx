@@ -3,26 +3,27 @@ import styles from '../styles/WriteReviewModal.module.css';
 import modalStyles from '../styles/common/Modal.module.css';
 import loading from '../assets/loading.svg';
 import { ValidationErrorMessage } from '../App';
+import { useSnackContext } from '../contexts/SnackContext';
 
 function getLength(s: string) {
     return [...s].length;
 }
 
-export type ReviewForm = {
+export type ReviewInput = {
     image: string,
     snack_name: string,
     rating: string,
     content: string,
 };
 
-type WriteReviewModalProps = {
-    showModal: boolean,
-    onClose(): void,
-    onSubmit(reviewForm: ReviewForm): void,
-};
+function WriteReviewModal() {
+    const {
+        showWriteReviewModal: showModal,
+        closeWriteReviewModal: onClose,
+        addReview
+    } = useSnackContext();
 
-function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProps) {
-    const initReviewForm: ReviewForm = {
+    const initReviewInput: ReviewInput = {
         image: "",
         snack_name: "",
         rating: "",
@@ -36,7 +37,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
         content: "",
     };
 
-    const [reviewForm, setReviewForm] = useState<ReviewForm>(initReviewForm);
+    const [reviewInput, setReviewInput] = useState<ReviewInput>(initReviewInput);
     const [imagePreviewSrc, setImagePreviewSrc] = useState("");
 
     const [isEditingImageInput, setIsEditingImageInput] = useState(false);
@@ -63,17 +64,17 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
 
     const handleChangeInput: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
         const { name, value } = e.target;
-        setReviewForm({ ...reviewForm, [name]: value})
+        setReviewInput({ ...reviewInput, [name]: value})
     }
 
-    function validateReviewForm(reviewForm: ReviewForm): ValidationErrorMessage {
+    function validateReviewInput(reviewInput: ReviewInput): ValidationErrorMessage {
         const errorObj: ValidationErrorMessage = { ...initErrorObj };
 
         if(isEditingImageInput || !isImageLoaded) {
             errorObj.image = "과자 이미지가 로딩되지 않았습니다.";
         }
 
-        const name = reviewForm.snack_name.replace(/\s+/g, "");
+        const name = reviewInput.snack_name.replace(/\s+/g, "");
         const nameLength = getLength(name);
         if (nameLength < 1) {
             errorObj.snack_name = "공백을 제외한 과자 이름이 1자 미만입니다.";
@@ -81,12 +82,12 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
             errorObj.snack_name = "과자 이름이 너무 깁니다. (20자 초과)";
         }
 
-        const rating = Number(reviewForm.rating);
+        const rating = Number(reviewInput.rating);
         if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
             errorObj.rating = "평점은 1~5 사이의 자연수여야 합니다.";
         }
 
-        const contentLength = getLength(reviewForm.content);
+        const contentLength = getLength(reviewInput.content);
         if (contentLength < 5) {
             errorObj.content = "리뷰 내용이 너무 짧습니다. (5자 미만)";
         } else if (contentLength > 1000) {
@@ -97,24 +98,24 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
     }
 
     /**
-     * validation 수행 후 App Component로 validated reviewForm 전송
+     * validation 수행 후 App Component로 validated reviewInput 전송
      */
     function handleSubmit() {
-        const newErrorObj = validateReviewForm(reviewForm);
+        const newErrorObj = validateReviewInput(reviewInput);
         
         if(JSON.stringify(newErrorObj) !== JSON.stringify(initErrorObj)) {
             // validation error 존재하는 경우 출력
             setErrorObj(newErrorObj);
         } else {
-            onSubmit(reviewForm);
-            setReviewForm(initReviewForm);
+            addReview(reviewInput);
+            setReviewInput(initReviewInput);
         }
     }
 
     function handleClose() {
         onClose();
         setImagePreviewSrc("");
-        setReviewForm(initReviewForm);
+        setReviewInput(initReviewInput);
         setErrorObj(initErrorObj);
     }
 
@@ -146,7 +147,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         name="image"
                         className={styles.input}
                         placeholder="예시: http://example.com/example.jpg"
-                        value={reviewForm.image}
+                        value={reviewInput.image}
                         onChange={handleChangeImage}
                     />
                     <p
@@ -163,7 +164,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         name="snack_name"
                         className={styles.input}
                         placeholder="예시: 새우깡"
-                        value={reviewForm.snack_name}
+                        value={reviewInput.snack_name}
                         onChange={handleChangeInput}
                     />
                     <p
@@ -180,7 +181,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         name="rating"
                         className={styles.input}
                         placeholder="예시: 4"
-                        value={reviewForm.rating}
+                        value={reviewInput.rating}
                         onChange={handleChangeInput}
                     />
                     <p
@@ -196,7 +197,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         name="content"
                         className={styles.textarea}
                         placeholder="예시: 손이 가요 손이 가 자꾸만 손이 가"
-                        value={reviewForm.content}
+                        value={reviewInput.content}
                         onChange={handleChangeInput}
                     ></textarea>
                     <p
