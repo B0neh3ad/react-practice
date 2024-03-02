@@ -51,7 +51,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
         setIsEditingImageInput(true);
         clearTimeout(imageInputChangeTimeoutId);
 
-        setReviewForm({ ...reviewForm, image: e.target.value })
+        handleChangeInput(e);
         setImageInputChangeTimeoutId(
             // 편집이 멈춘 지 1초 뒤 편집 state 전환하고 preview image 보여주기
             setTimeout(() => {
@@ -60,14 +60,10 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
             }, 1000)
         );
     }
-    const handleChangeSnackName: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setReviewForm({ ...reviewForm, snack_name: e.target.value })
-    }
-    const handleChangeRating: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setReviewForm({ ...reviewForm, rating: e.target.value })
-    }
-    const handleChangeContent: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-        setReviewForm({ ...reviewForm, content: e.target.value })
+
+    const handleChangeInput: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+        const { name, value } = e.target;
+        setReviewForm({ ...reviewForm, [name]: value})
     }
 
     function validateReviewForm(reviewForm: ReviewForm): ValidationErrorMessage {
@@ -118,6 +114,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
 
     function handleClose() {
         onClose();
+        setImagePreviewSrc("");
         setReviewForm(initReviewForm);
         setErrorObj(initErrorObj);
     }
@@ -147,6 +144,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         type="text"
                         id="image-input"
                         data-testid="image-input"
+                        name="image"
                         className={styles.input}
                         placeholder="예시: http://example.com/example.jpg"
                         value={reviewForm.image}
@@ -163,10 +161,11 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         type="text"
                         id="name-input"
                         data-testid="name-input"
+                        name="snack_name"
                         className={styles.input}
                         placeholder="예시: 새우깡"
                         value={reviewForm.snack_name}
-                        onChange={handleChangeSnackName}
+                        onChange={handleChangeInput}
                     />
                     <p
                         data-testid="name-input-message"
@@ -179,10 +178,11 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                         type="text"
                         id="rating-input"
                         data-testid="rating-input"
+                        name="rating"
                         className={styles.input}
                         placeholder="예시: 4"
                         value={reviewForm.rating}
-                        onChange={handleChangeRating}
+                        onChange={handleChangeInput}
                     />
                     <p
                         data-testid="rating-input-message"
@@ -194,10 +194,11 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                     <textarea
                         id="content-input"
                         data-testid="content-input"
+                        name="content"
                         className={styles.textarea}
                         placeholder="예시: 손이 가요 손이 가 자꾸만 손이 가"
                         value={reviewForm.content}
-                        onChange={handleChangeContent}
+                        onChange={handleChangeInput}
                     ></textarea>
                     <p
                         data-testid="content-input-message"
@@ -209,7 +210,7 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                     <button
                         data-testid="submit-review"
                         className={`${modalStyles.button} ${styles.submitReviewButton} ${isEditingImageInput ? modalStyles.disabledButton : ""}`}
-                        onClick={()=>{!isEditingImageInput && handleSubmit}}>
+                        onClick={isEditingImageInput ? undefined : handleSubmit}>
                         작성
                     </button>
                     <button
