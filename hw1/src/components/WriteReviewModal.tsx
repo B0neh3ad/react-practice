@@ -209,7 +209,10 @@ function WriteReviewModal({ showModal, onClose, onSubmit }: WriteReviewModalProp
                 <div className={modalStyles.footer}>
                     <button
                         data-testid="submit-review"
-                        className={`${modalStyles.button} ${styles.submitReviewButton} ${isEditingImageInput ? modalStyles.disabledButton : ""}`}
+                        className={`${modalStyles.button} ${styles.submitReviewButton}`}
+                        style={isEditingImageInput ? {
+                            backgroundColor: 'gray'
+                        } : {}}
                         onClick={isEditingImageInput ? undefined : handleSubmit}>
                         작성
                     </button>
