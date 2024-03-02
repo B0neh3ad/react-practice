@@ -37,11 +37,10 @@ function Review({reviewValue, editReviewId, onEdit, onCancelEdit, onSaveEdit, on
                             <img data-testid="edit-review-cancel" className={styles.editReviewCancelButton} src={editReviewCancel} onClick={onCancelEdit}></img>
                         </>
                         : editReviewId === null
-                        ? <>
+                        && <>
                             <img data-testid="edit-review" className={styles.editReviewButton} src={editReview} onClick={onEdit}></img>
                             <img data-testid="delete-review" className={styles.deleteReviewButton} src={deleteReview} onClick={onDelete}></img>
                         </>
-                        : ""
                     }
                 </div>
             </div>
