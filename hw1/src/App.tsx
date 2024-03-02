@@ -63,9 +63,7 @@ function App() {
 
     function handleDelete() {
         console.log(`delete review #${deleteReviewId}`);
-        const newReviews = reviews.filter((value) => {
-            return value.id !== deleteReviewId;
-        })
+        const newReviews = reviews.filter(value => value.id !== deleteReviewId)
         setReviews(newReviews);
         handleCloseDeleteReviewModal();
     }
