@@ -1,5 +1,5 @@
 import ReviewList from "../components/ReviewList";
-import WriteReviewButton from "../components/WriteReviewButton";
+import OpenMenuButton from "../components/OpenMenuButton";
 import WriteReviewModal from "../components/WriteReviewModal";
 import DeleteReviewModal from '../components/DeleteReviewModal';
 
@@ -11,7 +11,7 @@ function Review() {
     return (
         <>
             <ReviewList />
-            <WriteReviewButton />
+            <OpenMenuButton />
             <WriteReviewModal />
             <DeleteReviewModal />
         </>
