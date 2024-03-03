@@ -1,10 +1,10 @@
 import { ChangeEventHandler, useState } from "react";
 import { Review } from "../contexts/SnackContext";
 import styles from "../styles/ReviewItem.module.css";
-import editReviewIcon from "../assets/editReview.svg";
-import editReviewCancelIcon from "../assets/cancelEditReview.svg";
-import deleteReviewIcon from "../assets/deleteReview.svg";
-import editReviewSaveIcon from "../assets/saveReview.svg";
+import editReviewIcon from "../assets/pencil.svg";
+import editReviewCancelIcon from "../assets/cancel.svg";
+import deleteReviewIcon from "../assets/trashbin.svg";
+import editReviewSaveIcon from "../assets/save.svg";
 import { useSnackContext } from "../contexts/SnackContext";
 
 function ReviewItem({ review }: { review: Review }) {
