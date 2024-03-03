@@ -3,7 +3,10 @@
     top: 0;
     width: 100%;
     height: 50px;
+
+    display: flex;
     padding: 5px;
+
     background-color: rgb(253 243 226);
     box-shadow: 0 1px 3px 1px #b9b9b9;
     z-index: 1;
@@ -12,8 +15,10 @@
 .logoWrap {
     height: 100%;
     width: fit-content;
+
     display: flex;
     align-items: center;
+
     text-decoration: none;
     color: inherit;
 }
@@ -26,4 +31,23 @@
 
 .waffleLogo {
     height: 100%;
+}
+
+.nav {
+    margin-left: 30px;
+
+    display: flex;
+    align-items: center;
+}
+
+.navLink {
+    padding: 0 10px;
+
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+}
+
+.navLink.active {
+    font-weight: bold;
 }
