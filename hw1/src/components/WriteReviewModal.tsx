@@ -4,12 +4,9 @@ import modalStyles from '../styles/common/Modal.module.css';
 import loading from '../assets/loading.svg';
 import { ReviewInput, useSnackContext } from '../contexts/SnackContext';
 
-function getLength(s: string) {
-    return [...s].length;
-}
+const getLength = (s: string) => [...s].length;
 
 export type ValidationErrorMessage = {
-    image: string,
     snack_name: string,
     rating: string,
     content: string,
@@ -17,20 +14,19 @@ export type ValidationErrorMessage = {
 
 function WriteReviewModal() {
     const {
+        getSnackByName,
         showWriteReviewModal: showModal,
         closeWriteReviewModal: onClose,
         addReview
     } = useSnackContext();
 
     const initReviewInput: ReviewInput = {
-        image: "",
         snack_name: "",
         rating: "",
         content: "",
     };
 
     const initErrorObj: ValidationErrorMessage = {
-        image: "",
         snack_name: "",
         rating: "",
         content: "",
@@ -39,39 +35,16 @@ function WriteReviewModal() {
     const [reviewInput, setReviewInput] = useState<ReviewInput>(initReviewInput);
     const [imagePreviewSrc, setImagePreviewSrc] = useState("");
 
-    const [isEditingImageInput, setIsEditingImageInput] = useState(false);
-    const [imageInputChangeTimeoutId, setImageInputChangeTimeoutId] = useState<number | undefined>(undefined);
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
-
     // review 추가 시 발생한 validation error message 저장
     const [errorObj, setErrorObj] = useState(initErrorObj);
-
-    const handleChangeImage: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setImagePreviewSrc(loading);
-        setIsEditingImageInput(true);
-        clearTimeout(imageInputChangeTimeoutId);
-
-        handleChangeInput(e);
-        setImageInputChangeTimeoutId(
-            // 편집이 멈춘 지 1초 뒤 편집 state 전환하고 preview image 보여주기
-            setTimeout(() => {
-                setImagePreviewSrc(e.target.value);
-                setIsEditingImageInput(false);
-            }, 1000)
-        );
-    }
 
     const handleChangeInput: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
         const { name, value } = e.target;
         setReviewInput({ ...reviewInput, [name]: value})
     }
 
-    function validateReviewInput(reviewInput: ReviewInput): ValidationErrorMessage {
+    const validateReviewInput = (reviewInput: ReviewInput): ValidationErrorMessage => {
         const errorObj: ValidationErrorMessage = { ...initErrorObj };
-
-        if(isEditingImageInput || !isImageLoaded) {
-            errorObj.image = "과자 이미지가 로딩되지 않았습니다.";
-        }
 
         const name = reviewInput.snack_name.replace(/\s+/g, "");
         const nameLength = getLength(name);
@@ -79,6 +52,11 @@ function WriteReviewModal() {
             errorObj.snack_name = "공백을 제외한 과자 이름이 1자 미만입니다.";
         } else if (nameLength > 20) {
             errorObj.snack_name = "과자 이름이 너무 깁니다. (20자 초과)";
+        }
+
+        const snack = getSnackByName(reviewInput.snack_name);
+        if (snack === null) {
+            errorObj.snack_name = "과자를 찾을 수 없습니다.";
         }
 
         const rating = Number(reviewInput.rating);
@@ -94,12 +72,12 @@ function WriteReviewModal() {
         }
 
         return errorObj;
-    }
+    };
 
     /**
      * validation 수행 후 App Component로 validated reviewInput 전송
      */
-    function handleSubmit() {
+    const handleSubmit = () => {
         const newErrorObj = validateReviewInput(reviewInput);
         
         if(JSON.stringify(newErrorObj) !== JSON.stringify(initErrorObj)) {
@@ -109,52 +87,22 @@ function WriteReviewModal() {
             addReview(reviewInput);
             setReviewInput(initReviewInput);
         }
-    }
+    };
 
-    function handleClose() {
+    const handleClose = () => {
         onClose();
         setImagePreviewSrc("");
         setReviewInput(initReviewInput);
         setErrorObj(initErrorObj);
-    }
+    };
 
     return (
         <div className={`${modalStyles.background} ${!showModal ? modalStyles.out : ""}`} onClick={handleClose}>
             <div className={modalStyles.content} data-testid="write-review-modal" onClick={e => e.stopPropagation()}>
-                <div className={styles.header}>
+                <div className={modalStyles.header}>
                     <h2 className={modalStyles.title}>리뷰 쓰기</h2>
                 </div>
                 <div className={styles.body}>
-                    <img
-                        id="image-preview"
-                        src={imagePreviewSrc}
-                        alt="과자 사진 미리보기"
-                        className={styles.imagePreview}
-                        onLoad={()=>{
-                            setIsImageLoaded(true);
-                        }}
-                        onError={() => {
-                            setIsImageLoaded(false);
-                        }}
-                    />
-
-                    <label htmlFor="image-input" className={styles.label}>이미지</label>
-                    <input
-                        type="text"
-                        id="image-input"
-                        data-testid="image-input"
-                        name="image"
-                        className={styles.input}
-                        placeholder="예시: http://example.com/example.jpg"
-                        value={reviewInput.image}
-                        onChange={handleChangeImage}
-                    />
-                    <p
-                        data-testid="image-input-message"
-                        className={styles.inputMessage}>
-                        {errorObj.image}
-                    </p>
-
                     <label htmlFor="name-input" className={styles.label}>과자 이름</label>
                     <input
                         type="text"
@@ -209,10 +157,7 @@ function WriteReviewModal() {
                     <button
                         data-testid="submit-review"
                         className={`${modalStyles.button} ${styles.submitReviewButton}`}
-                        style={isEditingImageInput ? {
-                            backgroundColor: 'gray'
-                        } : {}}
-                        onClick={isEditingImageInput ? undefined : handleSubmit}>
+                        onClick={handleSubmit}>
                         작성
                     </button>
                     <button

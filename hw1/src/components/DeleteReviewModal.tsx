@@ -5,18 +5,20 @@ import styles from '../styles/DeleteReviewModal.module.css';
 function DeleteReviewModal() {
     const {
         reviews,
+        getSnackById,
         deleteReviewId,
         showDeleteReviewModal: showModal,
         closeDeleteReviewModal: onClose,
         deleteReview: onDelete
     } = useSnackContext();
 
-    const snackName = reviews.find(review => review.id === deleteReviewId)?.snack_name;
+    const deleteReview = reviews.find(review => review.id === deleteReviewId);
+    const snackName = deleteReview && getSnackById(deleteReview.snack_id)?.snack_name;
 
     return (
         <div className={`${modalStyles.background} ${!showModal ? modalStyles.out : ""}` } onClick={onClose}>
             <div className={modalStyles.content} data-testid="write-review-modal" onClick={e => e.stopPropagation()}>
-                <div className={styles.header}>
+                <div className={modalStyles.header}>
                     <h2 className={modalStyles.title}>리뷰 삭제</h2>
                 </div>
                 <div className={styles.body}>
