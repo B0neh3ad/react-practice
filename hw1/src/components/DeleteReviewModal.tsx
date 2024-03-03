@@ -16,7 +16,7 @@ function DeleteReviewModal() {
     const snackName = deleteReview && getSnackById(deleteReview.snack_id)?.snack_name;
 
     return (
-        <div className={`${modalStyles.background} ${!showModal ? modalStyles.out : ""}` } onClick={onClose}>
+        <div className={`${modalStyles.background} ${showModal ? modalStyles.active : ""}` } onClick={onClose}>
             <div className={modalStyles.content} data-testid="write-review-modal" onClick={e => e.stopPropagation()}>
                 <div className={modalStyles.header}>
                     <h2 className={modalStyles.title}>리뷰 삭제</h2>

@@ -1,7 +1,6 @@
 import { ChangeEventHandler, useState } from 'react';
 import styles from '../styles/WriteReviewModal.module.css';
 import modalStyles from '../styles/common/Modal.module.css';
-import loading from '../assets/loading.svg';
 import { ReviewInput, useSnackContext } from '../contexts/SnackContext';
 
 const getLength = (s: string) => [...s].length;
@@ -97,7 +96,7 @@ function WriteReviewModal() {
     };
 
     return (
-        <div className={`${modalStyles.background} ${!showModal ? modalStyles.out : ""}`} onClick={handleClose}>
+        <div className={`${modalStyles.background} ${showModal ? modalStyles.active : ""}`} onClick={handleClose}>
             <div className={modalStyles.content} data-testid="write-review-modal" onClick={e => e.stopPropagation()}>
                 <div className={modalStyles.header}>
                     <h2 className={modalStyles.title}>리뷰 쓰기</h2>

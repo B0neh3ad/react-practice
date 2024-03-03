@@ -1,7 +1,8 @@
 .background {
     position: fixed;
     inset: 0 0 0 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0);
     z-index: 2;
 
     display: flex;
@@ -12,9 +13,9 @@
     transition-duration: 0.3s;
 }
 
-.background.out {
-    visibility: hidden;
-    background-color: rgba(0, 0, 0, 0);
+.background.active {
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .content {
@@ -26,11 +27,14 @@
     transition-property: transform, opacity;
     transition-duration: 0.4s, 0.15s;
     transition-delay: 0.1s;
-}
 
-.background.out>.content {
     transform: translateY(-30%);
     opacity: 0;
+}
+
+.background.active>.content {
+    transform: none;
+    opacity: 1;
 }
 
 .title {
