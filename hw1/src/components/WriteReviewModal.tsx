@@ -2,19 +2,18 @@ import { ChangeEventHandler, useState } from 'react';
 import styles from '../styles/WriteReviewModal.module.css';
 import modalStyles from '../styles/common/Modal.module.css';
 import loading from '../assets/loading.svg';
-import { ValidationErrorMessage } from '../App';
-import { useSnackContext } from '../contexts/SnackContext';
+import { ReviewInput, useSnackContext } from '../contexts/SnackContext';
 
 function getLength(s: string) {
     return [...s].length;
 }
 
-export type ReviewInput = {
+export type ValidationErrorMessage = {
     image: string,
     snack_name: string,
     rating: string,
     content: string,
-};
+}
 
 function WriteReviewModal() {
     const {
