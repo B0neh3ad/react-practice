@@ -98,7 +98,7 @@ export function SnackProvider({ children }: { children: ReactNode}) {
             rating: Number(validatedReviewInput.rating),
             content: validatedReviewInput.content,
         };
-        const newReviews = [...reviews, newReview];
+        const newReviews = [newReview, ...reviews];
         setReviews(newReviews);
         setNextReviewId(nextReviewId + 1);
         closeWriteReviewModal();
