@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "./Main";
 import Review from "./Review";
 import Snack from "./Snack";
+import SnackDetail from "./SnackDetail";
+import AddSnack from "./AddSnack";
 
 const Router = createBrowserRouter([
     {
@@ -9,20 +11,23 @@ const Router = createBrowserRouter([
         element: <Main />,
         children: [
             {
-                path: '/',
+                path: '',
                 element: <Review />,
             },
             {
-                path: '/snacks',
+                path: 'snacks',
                 element: <Snack />,
-                /** 
-                 * TODO: snacks/new, snacks/id 등의 페이지를
-                 * Snack의 하위 component로 둘지
-                 * 형제 component로 둘지 정해야 함
-                 * 
-                 * header 구현에 따라 정해질 듯..?
-                 * */
-            }
+                children: [
+                    {
+                        path: 'new',
+                        element: <AddSnack />,
+                    },
+                    {
+                        path: ':id',
+                        element: <SnackDetail />,
+                    },
+                ],
+            },
         ],
     },
 ]);
