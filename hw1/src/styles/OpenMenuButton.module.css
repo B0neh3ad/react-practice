@@ -1,0 +1,50 @@
+.background {
+    position: fixed;
+    inset: 0 0 0 0;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 2;
+
+    transition-property: visibility background-color;
+    transition-duration: 0.3s;
+}
+
+.background.active {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.openMenuButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: rgb(96, 238, 103);
+    box-shadow: 0px 2px 2px 1px #989898;
+
+    position: fixed;
+    right: 60px;
+    bottom: 60px;
+
+    text-align: center;
+    line-height: 50px;
+    color: white;
+
+    cursor: pointer;
+}
+
+.openMenuButton::before {
+    content: '+';
+    height: fit-content;
+    font-size: 40px;
+    position: absolute;
+    left: 25px;
+    top: 25px;
+    transform: translate(-50%, -50%);
+}
+
+.background.active > .openMenuButton {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.background.active > .openMenuButton::before {
+    background-color: rgba(0, 0, 0, 0);
+}
