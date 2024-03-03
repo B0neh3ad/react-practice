@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { SnackContext, useSnackContext } from '../contexts/SnackContext';
+import { useSnackContext } from '../contexts/SnackContext';
 import styles from '../styles/WriteReviewButton.module.css';
 
 function OpenMenuButton() {
