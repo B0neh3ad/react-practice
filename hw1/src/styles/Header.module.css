@@ -2,6 +2,7 @@
     position: fixed;
     top: 0;
     width: 100%;
+    min-width: 350px;
     height: 50px;
 
     display: flex;
