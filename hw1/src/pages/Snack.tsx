@@ -10,7 +10,9 @@ function Snack() {
     const isMain = useMatch(pathname);
     return (
         <>
-        { isMain ? <SnackList /> : <Outlet />}
+        <div style={{marginTop: "90px"}}>
+            { isMain ? <SnackList /> : <Outlet />}
+        </div>
         </>
     );
 }

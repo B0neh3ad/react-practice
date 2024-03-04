@@ -114,7 +114,6 @@ export function SnackProvider({ children }: { children: ReactNode}) {
         const newReviews = [newReview, ...reviews];
         setReviews(newReviews);
         setNextReviewId(nextReviewId + 1);
-        closeWriteReviewModal();
     }
 
     /* Delete review modal */
