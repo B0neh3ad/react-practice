@@ -59,10 +59,7 @@
     right: 5px;
 }
 
-.editReviewButton,
-.deleteReviewButton,
-.editReviewSaveButton,
-.editReviewCancelButton {
+.reviewButtonWrapper > img {
     width: 20px;
     height: 20px;
     margin: 0 5px;
