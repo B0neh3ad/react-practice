@@ -1,15 +1,24 @@
 import { ChangeEventHandler, useState } from 'react';
 import styles from '../styles/WriteReviewModal.module.css';
 import modalStyles from '../styles/common/Modal.module.css';
+import FormStyles from '../styles/common/Form.module.css';
 import { ReviewInput, useSnackContext } from '../contexts/SnackContext';
 
 const getLength = (s: string) => [...s].length;
 
 export type ValidationErrorMessage = {
+    image: string,
     snack_name: string,
     rating: string,
     content: string,
 }
+
+export const initErrorObj: ValidationErrorMessage = {
+    image: "",
+    snack_name: "",
+    rating: "",
+    content: "",
+};
 
 function WriteReviewModal() {
     const {
@@ -19,23 +28,14 @@ function WriteReviewModal() {
         addReview
     } = useSnackContext();
 
-    const initReviewInput: ReviewInput = {
-        snack_name: "",
-        rating: "",
-        content: "",
-    };
-
-    const initErrorObj: ValidationErrorMessage = {
+    const initReviewInput: ReviewInput = { 
         snack_name: "",
         rating: "",
         content: "",
     };
 
     const [reviewInput, setReviewInput] = useState<ReviewInput>(initReviewInput);
-    const [imagePreviewSrc, setImagePreviewSrc] = useState("");
-
-    // review 추가 시 발생한 validation error message 저장
-    const [errorObj, setErrorObj] = useState(initErrorObj);
+    const [errorObj, setErrorObj] = useState(initErrorObj); // review 추가 시 발생한 validation error message 저장
 
     const handleChangeInput: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
         const { name, value } = e.target;
@@ -84,13 +84,12 @@ function WriteReviewModal() {
             setErrorObj(newErrorObj);
         } else {
             addReview(reviewInput);
-            setReviewInput(initReviewInput);
+            handleClose();
         }
     };
 
     const handleClose = () => {
         onClose();
-        setImagePreviewSrc("");
         setReviewInput(initReviewInput);
         setErrorObj(initErrorObj);
     };
@@ -102,66 +101,66 @@ function WriteReviewModal() {
                     <h2 className={modalStyles.title}>리뷰 쓰기</h2>
                 </div>
                 <div className={styles.body}>
-                    <label htmlFor="name-input" className={styles.label}>과자 이름</label>
+                    <label htmlFor="name-input" className={FormStyles.label}>과자 이름</label>
                     <input
                         type="text"
                         id="name-input"
                         data-testid="name-input"
                         name="snack_name"
-                        className={styles.input}
+                        className={FormStyles.input}
                         placeholder="예시: 새우깡"
                         value={reviewInput.snack_name}
                         onChange={handleChangeInput}
                     />
                     <p
                         data-testid="name-input-message"
-                        className={styles.inputMessage}>
+                        className={FormStyles.inputMessage}>
                         {errorObj.snack_name}
                     </p>
 
-                    <label htmlFor="rating-input" className={styles.label}>평점</label>
+                    <label htmlFor="rating-input" className={FormStyles.label}>평점</label>
                     <input
                         type="text"
                         id="rating-input"
                         data-testid="rating-input"
                         name="rating"
-                        className={styles.input}
+                        className={FormStyles.input}
                         placeholder="예시: 4"
                         value={reviewInput.rating}
                         onChange={handleChangeInput}
                     />
                     <p
                         data-testid="rating-input-message"
-                        className={styles.inputMessage}>
+                        className={FormStyles.inputMessage}>
                         {errorObj.rating}
                     </p>
 
-                    <label htmlFor="content-input" className={styles.label}>내용</label>
+                    <label htmlFor="content-input" className={FormStyles.label}>내용</label>
                     <textarea
                         id="content-input"
                         data-testid="content-input"
                         name="content"
-                        className={styles.textarea}
+                        className={FormStyles.textarea}
                         placeholder="예시: 손이 가요 손이 가 자꾸만 손이 가"
                         value={reviewInput.content}
                         onChange={handleChangeInput}
                     ></textarea>
                     <p
                         data-testid="content-input-message"
-                        className={styles.inputMessage}>
+                        className={FormStyles.inputMessage}>
                         {errorObj.content}
                     </p>
                 </div>
                 <div className={modalStyles.footer}>
                     <button
                         data-testid="submit-review"
-                        className={`${modalStyles.button} ${styles.submitReviewButton}`}
+                        className={`${modalStyles.button} ${FormStyles.submitButton}`}
                         onClick={handleSubmit}>
                         작성
                     </button>
                     <button
                         data-testid="cancel-review"
-                        className={`${modalStyles.button} ${styles.cancelReviewButton}`}
+                        className={`${modalStyles.button} ${FormStyles.cancelButton}`}
                         onClick={handleClose}>
                         취소
                     </button>
