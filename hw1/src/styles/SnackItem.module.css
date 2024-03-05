@@ -1,5 +1,6 @@
 .snackItem {
     width: 120px;
+    height: 160px;
     box-shadow: 1px 2px 3px 1px #b9b9b9;
     border-radius: 1px;
     padding: 10px;
