@@ -7,7 +7,7 @@ import deleteReviewIcon from "../assets/trashbin.svg";
 import editReviewSaveIcon from "../assets/save.svg";
 import { useSnackContext } from "../contexts/SnackContext";
 
-function ReviewItem({ review }: { review: Review }) {
+function ReviewItem({ review, includeSnackInfo = false }: { review: Review, includeSnackInfo: boolean }) {
     const { getSnackById, editReviewId, editReview, cancelEditReview, saveEditReview, openDeleteReviewModal } = useSnackContext();
     const snack = getSnackById(review.snack_id);
 
@@ -19,12 +19,20 @@ function ReviewItem({ review }: { review: Review }) {
 
     return (
         <div className={styles.review} data-testid="review">
-            <img className={styles.snackImage} data-testid="snack-image" src={snack?.image} alt="과자 사진"></img>
+            {
+                includeSnackInfo && 
+                <img className={styles.snackImage} data-testid="snack-image" src={snack?.image} alt="과자 사진"></img>
+            }
             <div className={styles.reviewMain}>
                 <div className={styles.reviewHeader}>
-                    <span className={styles.snackName}>{snack ? snack.snack_name : "(알 수 없음)"}</span>
-                    /
-                    <span className={styles.rating}>★{review.rating.toFixed(1)}</span>
+                    {
+                        includeSnackInfo && 
+                        <>
+                            <span className={styles.snackName}>{snack ? snack.snack_name : "(알 수 없음)"}</span>
+                            /
+                        </>
+                    }
+                    <span className={styles.rating} style={includeSnackInfo ? { marginLeft: "5px" } : {}}>★{review.rating.toFixed(1)}</span>
                     <div className={styles.reviewButtonWrapper}>
                         {
                             editReviewId === review.id
