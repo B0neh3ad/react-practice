@@ -10,7 +10,7 @@ import DeleteReviewModal from '../components/DeleteReviewModal';
 function Review() {
     return (
         <>
-            <ReviewList />
+            <ReviewList snackId={null}/>
             <OpenMenuButton />
             <WriteReviewModal />
             <DeleteReviewModal />
