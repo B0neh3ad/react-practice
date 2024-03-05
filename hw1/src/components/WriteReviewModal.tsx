@@ -2,7 +2,7 @@ import { ChangeEventHandler, useState } from 'react';
 import styles from '../styles/WriteReviewModal.module.css';
 import modalStyles from '../styles/common/Modal.module.css';
 import FormStyles from '../styles/common/Form.module.css';
-import { ReviewInput, useSnackContext } from '../contexts/SnackContext';
+import { ReviewInput, Snack, useSnackContext } from '../contexts/SnackContext';
 
 export const getLength = (s: string) => [...s].length;
 
@@ -23,6 +23,7 @@ export const initErrorObj: ValidationErrorMessage = {
 function WriteReviewModal() {
     const {
         getSnackByName,
+        filterSnackByName,
         showWriteReviewModal: showModal,
         closeWriteReviewModal: onClose,
         addReview
@@ -35,11 +36,21 @@ function WriteReviewModal() {
     };
 
     const [reviewInput, setReviewInput] = useState<ReviewInput>(initReviewInput);
+    const [snackCandidates, setSnackCandidates] = useState<Snack[]>([]);
     const [errorObj, setErrorObj] = useState(initErrorObj); // review 추가 시 발생한 validation error message 저장
 
     const handleChangeInput: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
         const { name, value } = e.target;
         setReviewInput({ ...reviewInput, [name]: value})
+    }
+
+    const createSnackNameCandidates = () => {
+        setSnackCandidates(filterSnackByName(reviewInput.snack_name));
+    }
+
+    const selectCandidate = (candidateName: string) => {
+        setReviewInput({ ...reviewInput, 'snack_name': candidateName});
+        setSnackCandidates([]);
     }
 
     const validateReviewInput = (reviewInput: ReviewInput): ValidationErrorMessage => {
@@ -84,6 +95,7 @@ function WriteReviewModal() {
         onClose();
         setReviewInput(initReviewInput);
         setErrorObj(initErrorObj);
+        setSnackCandidates([]);
     };
 
     return (
@@ -102,8 +114,25 @@ function WriteReviewModal() {
                         className={FormStyles.input}
                         placeholder="예시: 새우깡"
                         value={reviewInput.snack_name}
-                        onChange={handleChangeInput}
+                        onChange={(e)=>{
+                            handleChangeInput(e);
+                            createSnackNameCandidates();
+                        }}
                     />
+                    <ul
+                    className={styles.nameAutoComplete}
+                    style={{
+                        border: snackCandidates.length ? "1px solid black" : ""
+                    }}
+                    >
+                        {
+                            snackCandidates.map(snack => (
+                                <li key={snack.id} onClick={()=>{selectCandidate(snack.snack_name)}}>
+                                    {snack.snack_name}
+                                </li>
+                            ))
+                        }
+                    </ul>
                     <p
                         data-testid="name-input-message"
                         className={FormStyles.inputMessage}>

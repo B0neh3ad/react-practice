@@ -1,3 +1,14 @@
 .body {
-    
+    position: relative;
+}
+
+.nameAutoComplete {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    margin-top: -15px;
+}
+
+.nameAutoComplete li:hover {
+    background-color: rgb(209, 209, 209);
 }
