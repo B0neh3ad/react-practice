@@ -14,8 +14,7 @@ import loadingIcon from '../assets/loading.svg';
 function AddSnack() {
     /* TODO: WriteReviewModal이랑 business logic 거의 동일... 이거 context든 뭐든 뺄 수 없나? */
 
-    /* TODO: image preview 관련 구현 */
-    const { nextSnackId, addSnack } = useSnackContext();
+    const { nextSnackId, getSnackByName, addSnack } = useSnackContext();
     const navigate = useNavigate();
 
     const initSnackInput: SnackInput = {
@@ -52,7 +51,6 @@ function AddSnack() {
     const validateSnackInput = (snackInput: SnackInput): ValidationErrorMessage => {
         const errorObj: ValidationErrorMessage = { ...initErrorObj };
         
-        /* TODO: validation 구현 */
         const image = snackInput.image.replace(/\s+/g, "");
         if (getLength(image) < 1) {
             errorObj.image = "이미지 링크가 너무 짧습니다. (1자 미만)";
@@ -72,6 +70,10 @@ function AddSnack() {
             errorObj.snack_name = "공백을 제외한 과자 이름이 1자 미만입니다.";
         } else if (nameLength > 20) {
             errorObj.snack_name = "과자 이름이 너무 깁니다. (20자 초과)";
+        }
+
+        if (getSnackByName(name) !== null) {
+            errorObj.snack_name = "이미 존재하는 과자 이름입니다.";
         }
 
         return errorObj;
