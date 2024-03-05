@@ -2,7 +2,7 @@ import { useSnackContext } from '../contexts/SnackContext';
 import styles from '../styles/OpenMenuButton.module.css';
 import snackIcon from '../assets/snack.svg';
 import writeReviewIcon from '../assets/pencil.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function OpenMenuButton() {
