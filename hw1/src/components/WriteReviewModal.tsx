@@ -4,7 +4,7 @@ import modalStyles from '../styles/common/Modal.module.css';
 import FormStyles from '../styles/common/Form.module.css';
 import { ReviewInput, useSnackContext } from '../contexts/SnackContext';
 
-const getLength = (s: string) => [...s].length;
+export const getLength = (s: string) => [...s].length;
 
 export type ValidationErrorMessage = {
     image: string,
@@ -44,14 +44,6 @@ function WriteReviewModal() {
 
     const validateReviewInput = (reviewInput: ReviewInput): ValidationErrorMessage => {
         const errorObj: ValidationErrorMessage = { ...initErrorObj };
-
-        const name = reviewInput.snack_name.replace(/\s+/g, "");
-        const nameLength = getLength(name);
-        if (nameLength < 1) {
-            errorObj.snack_name = "공백을 제외한 과자 이름이 1자 미만입니다.";
-        } else if (nameLength > 20) {
-            errorObj.snack_name = "과자 이름이 너무 깁니다. (20자 초과)";
-        }
 
         const snack = getSnackByName(reviewInput.snack_name);
         if (snack === null) {

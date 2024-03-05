@@ -34,7 +34,7 @@ export type SnackContextData = {
     getSnackById: (id: number) => Snack | null;
     getSnackByName: (name: string) => Snack | null;
     filterSnackByName: (query: string) => Snack[];
-    // addSnack: (snackInput: SnackInput) => Snack;
+    addSnack: (snackInput: SnackInput) => void;
 
     reviews: Review[];
     nextReviewId: number;
@@ -88,6 +88,16 @@ export function SnackProvider({ children }: { children: ReactNode}) {
         const filteredSnacks = snacks.filter((value: Snack) => value.snack_name.replace(' ', '').includes(query.replace(' ', '')));
         return filteredSnacks;
     }
+    const addSnack = (snackInput: SnackInput) => {
+        const newSnack: Snack = {
+            id: nextSnackId,
+            ...snackInput,
+            rating: 0
+        };
+        const newSnacks = [...snacks, newSnack];
+        setSnacks(newSnacks);
+        setNextSnackId(nextSnackId+1);
+    };
 
     /* Edit review */
     const editReview = (id: number) => setEditReviewId(id);
@@ -134,6 +144,7 @@ export function SnackProvider({ children }: { children: ReactNode}) {
         getSnackById,
         getSnackByName,
         filterSnackByName,
+        addSnack,
 
         reviews,
         nextReviewId,
